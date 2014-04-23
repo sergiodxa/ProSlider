@@ -8,6 +8,7 @@ var Slider = function(propieties) {
   this.navigation   = propieties.navigation || false;
   this.nextBtn      = propieties.nextBtn || '.next-btn';
   this.prevBtn      = propieties.prevBtn || '.prev-btn';
+  this.responsive   = propieties.responsive || false;
   this.speed        = propieties.speed || 0.5;
   this.timer        = propieties.timer*1000 || false;
   this.touch        = propieties.touch || false;
@@ -22,22 +23,6 @@ var Slider = function(propieties) {
 
   /* ============================================================= */
 
-
-  // definimos la variable totalWidth
-  var totalWidth = parseInt($container.parent().css('width')) * parseInt($element.length);
-
-  /* sumamos el ancho de todos los elementos
-  for (var i = 0; i < $element.length; ++i) {
-    totalWidth += parseInt($($element[i]).css('width'));
-  }*/
-
-  // definimos la variable totalHeight
-  var totalHeight = 0;
-
-  // sumamos el alto de todos los elementos
-  for (var i = 0; i < $element.length; ++i) {
-    totalHeight += parseInt($($element[i]).css('height'));
-  }
 
   // Le damos al padre del contenedor la propiedad overflow: hidden
   $container.parent().css('overflow', 'hidden');
@@ -61,25 +46,54 @@ var Slider = function(propieties) {
   // si la dirección es horizontal definimos axis como X
   if (this.direction == 'horizontal')  {
     axis = 'X';
-
-    // le damos a todos los elementos del slider float: left
-    $element.css({
-      'float': 'left'
-    });
-
-    // le colocamos al contenedor el ancho total
-    $container.css({
-      'width': totalWidth+'px'
-    });
   }
   // en caso contrario si es vertical definimos axis como Y
   else if (this.direction == 'vertical') {
     axis = 'Y';
+  }
 
-    // le colocamos al contenedor el alto total
-    $container.css({
-      'height': totalHeight+'px'
-    });
+
+  /* ============================================================= */
+
+
+  // definimos el método para calcular el ancho y alto
+  this.setSize = function() {
+    // calculamos el ancho si el slider es horizontal
+    if (axis == 'X') {
+      // definimos la variable totalWidth
+      var totalWidth = parseInt($container.parent().css('width')) * parseInt($element.length);
+
+      /* sumamos el ancho de todos los elementos -> código en desuso, dejado por las dudas
+      for (var i = 0; i < $element.length; ++i) {
+        totalWidth += parseInt($($element[i]).css('width'));
+      }*/
+
+      // le damos a todos los elementos del slider float: left
+      $element.css({
+        'float': 'left',
+        'width': $container.parent().css('width')
+      });
+
+      // le colocamos al contenedor el ancho total
+      $container.css({
+        'width': totalWidth+'px'
+      });
+    }
+    // calculamos el alto si el slider es vertical
+    else if (axis == 'Y') {
+      // definimos la variable totalHeight
+      var totalHeight = 0;
+
+      // sumamos el alto de todos los elementos
+      for (var i = 0; i < $element.length; ++i) {
+        totalHeight += parseInt($($element[i]).css('height'));
+      }
+
+      // le colocamos al contenedor el alto total
+      $container.css({
+        'height': totalHeight+'px'
+      });
+    }
   }
 
 
@@ -422,6 +436,10 @@ var Slider = function(propieties) {
 
   // definimos el método para inicial el slider
   this.initialize = function() {
+
+    // seteamos el tamaño del contenedor del slider
+    this.setSize();
+
     // al primer elemento del slider le agregamos la clase .js-active-slide
     $($element[0]).addClass('.js-active-slide');
 
@@ -437,6 +455,14 @@ var Slider = function(propieties) {
     // iniciamos el autoslide si esta seteado un timer
     if (this.timer) {
       this.setAutoSlide();
+    }
+
+    // asignamos el método setSize el evento resize si el soporte para responsive esta activado.
+    if (this.responsive) {
+      $(window)
+        .on('resize', this.setSize)
+        .on('resize', this.nextSlide)
+        .on('resize', this.prevSlide);
     }
   }
 

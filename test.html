@@ -73,7 +73,6 @@
     #slider-vertical ul li,
     #slider-horizontal ul li {
       height: 400px;
-      width : 100%;
     }
   </style>
 </head>
@@ -110,6 +109,7 @@
       element   : '#slider-horizontal ul li',
       nextBtn   : '#next-horizontal',
       prevBtn   : '#prev-horizontal',
+      responsive: true,
       speed     : 0.5
     });
     horizontalSlide.initialize();
@@ -119,6 +119,7 @@
       element   : '#slider-vertical ul li',
       nextBtn   : '#next-vertical',
       prevBtn   : '#prev-vertical',
+      responsive: true,
       speed     : 0.5
     });
     verticalSlide.initialize();
