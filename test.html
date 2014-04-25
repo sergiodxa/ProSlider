@@ -74,6 +74,30 @@
     #slider-horizontal ul li {
       height: 400px;
     }
+    .nav {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+    .slider-nav-list {
+      text-align: center;
+    }
+    .slider-nav-list-link {
+      background: #fdfdfd;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      color: #000;
+      display: inline-block;
+      font-size: 0;
+      height: .75rem;
+      margin: .5rem;
+      width: .75rem;
+    }
+    .slider-nav-list-link.activo {
+      background: #ff0;
+    }
   </style>
 </head>
 <body>
@@ -86,6 +110,7 @@
       <li style="background:green;">LOL</li>
       <li style="background:blue;">XD</li>
     </ul>
+    <div class="nav"></div>
     <a id="prev-horizontal">&lt;</a>
     <a id="next-horizontal">&gt;</a>
   </div>
@@ -105,14 +130,17 @@
   <script src="proslider.js"></script>
   <script>
     var horizontalSlide = new Slider({
-      direction : 'horizontal',
-      element   : '#slider-horizontal ul li',
-      nextBtn   : '#next-horizontal',
-      prevBtn   : '#prev-horizontal',
-      responsive: true,
-      speed     : 0.5
+      direction   : 'horizontal',
+      element     : '#slider-horizontal ul li',
+      navigation  : true,
+      navContainer: '#slider-horizontal .nav',
+      nextBtn     : '#next-horizontal',
+      prevBtn     : '#prev-horizontal',
+      responsive  : true,
+      speed       : 0.5
     });
     horizontalSlide.initialize();
+    horizontalSlide.setNavigation();
 
     var verticalSlide = new Slider({
       direction : 'vertical',
