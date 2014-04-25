@@ -79,9 +79,11 @@
       left: 0;
       position: absolute;
       right: 0;
+      width: auto;
     }
     .slider-nav-list {
       text-align: center;
+      width: auto;
     }
     .slider-nav-list-link {
       background: #fdfdfd;
@@ -95,8 +97,8 @@
       margin: .5rem;
       width: .75rem;
     }
-    .slider-nav-list-link.activo {
-      background: #ff0;
+    .slider-nav-list-link.active {
+      background: #101010 !important;
     }
   </style>
 </head>
@@ -123,6 +125,7 @@
       <li style="background:green;">LOL</li>
       <li style="background:blue;">XD</li>
     </ul>
+    <div class="nav"></div>
     <a id="prev-vertical">&lt;</a>
     <a id="next-vertical">&gt;</a>
   </div>
@@ -137,18 +140,21 @@
       nextBtn     : '#next-horizontal',
       prevBtn     : '#prev-horizontal',
       responsive  : true,
-      speed       : 0.5
+      speed       : 0.5,
+      touch       : true
     });
     horizontalSlide.initialize();
-    horizontalSlide.setNavigation();
 
     var verticalSlide = new Slider({
-      direction : 'vertical',
-      element   : '#slider-vertical ul li',
-      nextBtn   : '#next-vertical',
-      prevBtn   : '#prev-vertical',
-      responsive: true,
-      speed     : 0.5
+      direction   : 'vertical',
+      element     : '#slider-vertical ul li',
+      navigation  : true,
+      navContainer: '#slider-vertical .nav',
+      nextBtn     : '#next-vertical',
+      prevBtn     : '#prev-vertical',
+      responsive  : true,
+      speed       : 0.5,
+      touch       : true
     });
     verticalSlide.initialize();
   </script>

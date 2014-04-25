@@ -55,13 +55,15 @@ var Slider = function(propieties) {
 
   /* ============================================================= */
 
+  var totalHeight,
+      totalWidth;
 
   // definimos el método para calcular el ancho y alto
   this.setSize = function() {
     // calculamos el ancho si el slider es horizontal
     if (axis == 'X') {
       // definimos la variable totalWidth
-      var totalWidth = parseInt($container.parent().css('width')) * parseInt($element.length);
+      totalWidth = parseInt($container.parent().css('width')) * parseInt($element.length);
 
       /* sumamos el ancho de todos los elementos -> código en desuso, dejado por las dudas
       for (var i = 0; i < $element.length; ++i) {
@@ -82,7 +84,7 @@ var Slider = function(propieties) {
     // calculamos el alto si el slider es vertical
     else if (axis == 'Y') {
       // definimos la variable totalHeight
-      var totalHeight = 0;
+      totalHeight = 0;
 
       // sumamos el alto de todos los elementos
       for (var i = 0; i < $element.length; ++i) {
@@ -141,7 +143,7 @@ var Slider = function(propieties) {
       });
 
       // al elemento actual le quitamos la clase .js-active-slide
-      $($element[actualSlide]).removeClass('.js-active-slide');
+      $($element).removeClass('.js-active-slide');
 
       // al siguiente elemento le agregamos la clase .js-active-slide
       $($element[actualSlide]).next().addClass('.js-active-slide');
@@ -159,10 +161,27 @@ var Slider = function(propieties) {
       });
 
       // al elemento actual le quitamos la clase .js-active-slide
-      $($element[actualSlide]).removeClass('.js-active-slide');
+      $($element).removeClass('.js-active-slide');
 
       // al primer elemento le agregamos la clase .js-active-slide
       $($element[0]).addClass('.js-active-slide');
+    }
+
+    // cambiamos el slider-nav-list-link activo
+    var $navListLink = $navContainer.find('.slider-nav-list-link')
+    for (var i = 0; i < $navListLink.length; ++i) {
+      if (actualSlide == $navListLink.length-1) {
+        if ($($navListLink[i]).data('slide') == 0) {
+          $navListLink.removeClass('active');
+          $($navListLink[i]).addClass('active');
+        }
+      }
+      else {
+        if ($($navListLink[i]).data('slide') == actualSlide+1) {
+          $navListLink.removeClass('active');
+          $($navListLink[i]).addClass('active');
+        }
+      }
     }
   }
 
@@ -211,7 +230,7 @@ var Slider = function(propieties) {
       });
 
       // al elemento actual le quitamos la clase .js-active-slide
-      $($element[actualSlide]).removeClass('.js-active-slide');
+      $($element).removeClass('.js-active-slide');
 
       // al siguiente elemento le agregamos la clase .js-active-slide
       $($element[actualSlide]).prev().addClass('.js-active-slide');
@@ -244,10 +263,27 @@ var Slider = function(propieties) {
       });
 
       // al elemento actual le quitamos la clase .js-active-slide
-      $($element[actualSlide]).removeClass('.js-active-slide');
+      $($element).removeClass('.js-active-slide');
 
       // al primer elemento le agregamos la clase .js-active-slide
       $($element[$element.length-1]).addClass('.js-active-slide');
+    }
+
+    // cambiamos el slider-nav-list-link activo
+    var $navListLink = $navContainer.find('.slider-nav-list-link')
+    for (var i = 0; i < $navListLink.length; ++i) {
+      if (actualSlide == 0) {
+        if ($($navListLink[i]).data('slide') == $navListLink.length-1) {
+          $navListLink.removeClass('active');
+          $($navListLink[i]).addClass('active');
+        }
+      }
+      else {
+        if ($($navListLink[i]).data('slide') == actualSlide-1) {
+          $navListLink.removeClass('active');
+          $($navListLink[i]).addClass('active');
+        }
+      }
     }
   }
 
@@ -263,22 +299,34 @@ var Slider = function(propieties) {
 
   /* ============================================================= */
 
-
+  var nextSlide = this.nextSlide;
+  var prevSlide = this.prevSlide;
   // definimos el método para activar el soporte touch
   this.activeTouch = function() {
     // asignamos los métodos nextSlide y prevSlide a los eventos swipe
     if (axis == 'X') {
       // asignamos los eventos a swiperight y swipeleft si el axis es X
-      $element.on('swiperight', this.nextSlide);
-      $element.on('swipeleft', this.prevSlide);
+      $element.swipe({
+        swipeLeft: function(event, direction, distance, duration, fingerCount) {
+          nextSlide();
+        },
+        swipeRight: function(event, direction, distance, duration, fingerCount) {
+          prevSlide();
+        }
+      });
     }
     else if (axis == 'Y') {
       // asignamos los eventos a swipebottom y swipetop si el axis es Y
-      $element.on('swipebottom', this.nextSlide);
-      $element.on('swipetop', this.prevSlide);
+      $element.swipe({
+        swipeDown: function(event, direction, distance, duration, fingerCount) {
+          prevSlide();
+        },
+        swipeUp: function(event, direction, distance, duration, fingerCount) {
+          nextSlide();
+        }
+      });
     }
   }
-
 
   /* ============================================================= */
 
@@ -299,12 +347,64 @@ var Slider = function(propieties) {
     // agramos el contenido de navContent a $navContainer
     $navContainer.html(navContent);
 
-    var $navLinks = $('.slider-nav-list-link');
+    // obtenemos todos los slider-nav-list-link dentro de $navContainer
+    var $navLinks = $navContainer.find('.slider-nav-list-link');
 
+    // al primer navLink le agregamos la clase active
+    $($navLinks[0]).addClass('active');
+
+    // recorremos todos los slider-nav-list-link
     for (var i = 0; i < $navLinks.length; ++i) {
+
+      // le asignamos a cada uno una función onclick
       $($navLinks[i]).on('click', function() {
+
+        // les quitamos la clase active
         $navLinks.removeClass('active');
+
+        // se la agregamos al actual
         $(this).addClass('active');
+
+        // definimos actualSlide como el slide objetivo menos 1
+        var actualSlide = $(this).data('slide')-1;
+
+        // definimos la variable nextValue
+        var nextValue;
+
+        if (axis == 'X') {
+        // obtenemos el ancho del siguiente elemento del slide
+          var nextValue = parseInt($($element[actualSlide]).next().css('width'));
+          nextValue     = nextValue*(actualSlide+1);
+        }
+
+        if (axis == 'Y') {
+        // obtenemos el alto del siguiente elemento del slide
+          var nextValue = parseInt($($element[actualSlide]).next().css('height'));
+          nextValue     = nextValue*(actualSlide+1);
+        }
+
+        // trasladamos en el eje X/Y el contenido de $container
+        $container.css({
+          '-webkit-transform': 'translate'+axis+'(-'+nextValue+'px)',
+          '-moz-transform': 'translate'+axis+'(-'+nextValue+'px)',
+          '-ms-transform': 'translate'+axis+'(-'+nextValue+'px)',
+          '-o-transform': 'translate'+axis+'(-'+nextValue+'px)',
+          'transform': 'translate'+axis+'(-'+nextValue+'px)',
+        });
+
+        // al elemento actual le quitamos la clase .js-active-slide
+        $($element).removeClass('.js-active-slide');
+
+        // al siguiente elemento le agregamos la clase .js-active-slide
+        if (actualSlide == -1) {
+          // si actualSlide es 0 le agregamos la clase al elemento en posición 0
+          $($element[0]).addClass('.js-active-slide');
+        }
+        else {
+          // en cualquier otro caso se lo agregamos al siguiente
+          $($element[actualSlide]).next().addClass('.js-active-slide');
+        }
+
       });
     }
   }
@@ -313,7 +413,7 @@ var Slider = function(propieties) {
   /* ============================================================= */
 
 
-  // definimos el método para inicial el slider
+  // definimos el método para iniciar el slider
   this.initialize = function() {
 
     // seteamos el tamaño del contenedor del slider
@@ -339,9 +439,14 @@ var Slider = function(propieties) {
     // asignamos el método setSize el evento resize si el soporte para responsive esta activado.
     if (this.responsive) {
       $(window)
-        .on('resize', this.setSize)
-        .on('resize', this.nextSlide)
-        .on('resize', this.prevSlide);
+        .on('resize', this.setSize) // re calculamos el tamaño
+        .on('resize', this.nextSlide) // pasamos al siguiente slide
+        .on('resize', this.prevSlide); // y volvemos al anterior (esto es para que posicione bien el slide)
+    }
+
+    // creamos el navigation si esta activado
+    if (this.navigation) {
+      this.setNavigation();
     }
   }
 
