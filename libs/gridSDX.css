@@ -1,0 +1,64 @@
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.contenedor {
+  margin    : 0 auto;
+  width   : 99%;
+}
+.fila {
+  font-size : 0 !important;
+  overflow  : hidden;
+}
+[class^="col-"], [class*=" col-"] {
+  display     : inline-block;
+  font-size   : 1rem;
+  vertical-align  : top;
+}
+.col-20 { /* columna un quinto */
+  width: 20%;
+}
+.col-25 { /* columna un cuarto */
+  width: 25%;
+}
+.col-33 { /* columna un tercio */
+  width: 33.33%;
+}
+.col-40 { /* columna dos quintos */
+  width: 40%;
+}
+.col-50 { /* columna un medio */
+  width: 50%;
+}
+.col-60 { /* columna tres quintos */
+  width: 60%;
+}
+.col-66 { /* columna dos tercios */
+  width: 66.66%;
+}
+.col-75 { /* columna tres cuartos */
+  width: 75%;
+}
+.col-80 { /* columna cuatro quintos */
+  width: 80%;
+}
+.col-100 { /* columna entera */
+  width: 100%;
+}
+@media screen and (min-width: 960px) {
+  .contenedor {
+    max-width: 960px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .contenedor {
+    max-width: 1200px;
+  }
+}
+@media screen and (max-width: 640px) {
+  [class^="col-"], [class*=" col-"] {
+    display : block;
+    width : 100%;
+  }
+}
