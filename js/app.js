@@ -1,6 +1,6 @@
 function establecerAlto(){var a=window.innerHeight;$(".seccion").css("height",a+"px")}$(document).on("ready",function(){establecerAlto(),$(".desplegar-menu").on("click",function(){$(".menu-navegacion").toggleClass("desplegado")})}),$(window).on("resize",function(){establecerAlto()});
 
-/*var horizontalSlide = new Slider({
+var horizontalSlide = new Slider({
   direction   : 'horizontal',
   element     : '#slider-horizontal ul li',
   navigation  : true,
@@ -11,4 +11,18 @@ function establecerAlto(){var a=window.innerHeight;$(".seccion").css("height",a+
   speed       : 0.5,
   touch       : true
 });
-horizontalSlide.initialize();*/
+horizontalSlide.initialize();
+
+var verticalSlide = new Slider({
+  direction   : 'vertical',
+  element     : '#slider-vertical ul li',
+  navigation  : true,
+  navContainer: '#slider-vertical .nav',
+  nextBtn     : '#next-vertical',
+  prevBtn     : '#prev-vertical',
+  responsive  : true,
+  speed       : 0.5,
+  touch       : true,
+  timer       : 1
+});
+verticalSlide.initialize();

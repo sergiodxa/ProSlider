@@ -18,18 +18,57 @@
       </ul>
     </nav>
   </header>
+
   <section id="descargar" class="seccion">
     <div class="grupo-titulos">
       <h1 class="titulo">ProSlider</h1>
       <h2 class="subtitulo">Responsive y touch slider</h2>
     </div>
-    <a href="./static/css/grid.css" class="btn-descargar" target="_blank">Descargar</a>
-    <a href="./static/css/grid.min.css" class="link-descargar" target="_blank">Descargar archivo minificado</a>
+    <a href="./js/pro-slider.css" class="btn-descargar" target="_blank">Descargar</a>
+    <a href="./js/pro-slider.min.css" class="link-descargar" target="_blank">Descargar archivo minificado</a>
+  </section>
+
+<section id="demo" class="seccion">
+    <h3 class="titulo">Demo</h3>
+    <p>
+      Este es un demo de como funcion el slider en horizontal y vertical, con y sin timer, en ambos casos, responsive y touch.
+    </p>
+    <article class="scroll">
+      <div id="slider-horizontal">
+        <ul>
+          <li style="background:red;">RTFM</li>
+          <li style="background:green;">LOL</li>
+          <li style="background:blue;">XD</li>
+          <li style="background:red;">RTFM</li>
+          <li style="background:green;">LOL</li>
+          <li style="background:blue;">XD</li>
+        </ul>
+        <div class="nav"></div>
+        <a id="prev-horizontal">←</a>
+        <a id="next-horizontal">→</a>
+      </div>
+      <div id="slider-vertical">
+        <ul>
+          <li style="background:red;">RTFM</li>
+          <li style="background:green;">LOL</li>
+          <li style="background:blue;">XD</li>
+          <li style="background:red;">RTFM</li>
+          <li style="background:green;">LOL</li>
+          <li style="background:blue;">XD</li>
+        </ul>
+        <div class="nav"></div>
+        <a id="prev-vertical">↑</a>
+        <a id="next-vertical">↓</a>
+      </div>
+    </article>
+    <article class="mensaje">
+      La resolución de tu dispositivo es menor a 640px por lo que todas las columnas se ven una debajo de otra debido al responsive, accede desde un dispositivo más grande para ver su funcionamiento.
+    </article>
   </section>
 
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="./libs/jquery.touchSwipe.min.js"></script>
-  <script src="./js/proslider.js"></script>
+  <script src="./js/pro-slider.min.js"></script>
   <script src="./js/app.js"></script>
 </body>
 </html>
