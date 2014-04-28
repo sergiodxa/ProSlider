@@ -98,6 +98,7 @@ var Slider = function(propieties) {
       });
     }
   }
+  var setSize = this.setSize; // asignamos el método setSize para usar de forma interna.
 
 
   /* ============================================================= */
@@ -185,6 +186,7 @@ var Slider = function(propieties) {
       }
     }
   }
+  var nextSlide = this.nextSlide; // asignamos el método nextSlide para usar de forma interna.
 
 
   /* ============================================================= */
@@ -287,6 +289,7 @@ var Slider = function(propieties) {
       }
     }
   }
+  var prevSlide = this.prevSlide; // asignamos el método prevSlide para usar de forma interna.
 
 
   /* ============================================================= */
@@ -296,12 +299,12 @@ var Slider = function(propieties) {
   this.setAutoSlide = function() {
     setInterval(this.nextSlide, this.timer);
   }
+  var setAutoSlide = this.setAutoSlide; // asignamos el método setAutoSlide para usar de forma interna.
 
 
   /* ============================================================= */
 
-  var nextSlide = this.nextSlide;
-  var prevSlide = this.prevSlide;
+
   // definimos el método para activar el soporte touch
   this.activeTouch = function() {
     // asignamos los métodos nextSlide y prevSlide a los eventos swipe
@@ -328,10 +331,13 @@ var Slider = function(propieties) {
       });
     }
   }
+  var activeTouch = this.activeTouch; // asignamos el método activeTouch para usar de forma interna.
+
 
   /* ============================================================= */
 
 
+  // definimos el método para activar paginador para navegar por los slides facilmente
   this.setNavigation = function() {
 
     // definimos la variable navContent vacía
@@ -409,6 +415,55 @@ var Slider = function(propieties) {
       });
     }
   }
+  var setNavigation = this.setNavigation; // asignamos el método setNavigation para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  // definimos el método para activar el desplazamiento por teclas
+  this.setKeys = function() {
+    // detectamos el evento keydown en toda la ventana
+    $(window).keydown(function(ev) {
+    // comprobamos si el slider es horizontal o vertical
+    // si es horizontal
+      if (axis == 'X') {
+      // comprobamos cual tecla se oprimió
+      // si es la tecla 39 (flecha derecha)
+        if (ev.which == '39') {
+          // evitamos el evento por defecto
+          ev.preventDefault();
+          // pasamos al siguiente slide
+          nextSlide();
+        }
+        // si es la tecla 37 (flecha izquierda)
+        else if (ev.which == '37') {
+          // evitamos el evento por defecto
+          ev.preventDefault();
+          // pasamos al slide anterior
+          prevSlide();
+        }
+      }
+      // si es vertical
+      else if (axis == 'Y') {
+        // comprobamos cual tecla se oprimió
+        // si es la tecla 39 (flecha abajo)
+        if (ev.which == '40') {
+          // evitamos el evento por defecto
+          ev.preventDefault();
+          nextSlide();
+          // pasamos al siguiente slide
+        }
+        // si es la tecla 38 (flecha arriba)
+        else if (ev.which == '38') {
+          // evitamos el evento por defecto
+          ev.preventDefault();
+          // pasamos al slide anterior
+          prevSlide();
+        }
+      }
+    });
+  }
 
 
   /* ============================================================= */
@@ -418,61 +473,42 @@ var Slider = function(propieties) {
   this.initialize = function() {
 
     // seteamos el tamaño del contenedor del slider
-    this.setSize();
+    setSize();
 
     // al primer elemento del slider le agregamos la clase .js-active-slide
     $($element[0]).addClass('.js-active-slide');
 
     // asignamos los métodos nextSlide y prevSlide al evento click de $nextBtn y $prevBtn
-    $nextBtn.on('click', this.nextSlide);
-    $prevBtn.on('click', this.prevSlide);
+    $nextBtn.on('click', nextSlide);
+    $prevBtn.on('click', prevSlide);
 
     // activamos los eventos touch si está soportado el touch
     if (this.touch) {
-      this.activeTouch();
+      activeTouch();
     }
 
     // iniciamos el autoslide si esta seteado un timer
     if (this.timer) {
-      this.setAutoSlide();
+      setAutoSlide();
     }
 
     // asignamos el método setSize el evento resize si el soporte para responsive esta activado.
     if (this.responsive) {
-      $(window)
-        .on('resize', this.setSize) // re calculamos el tamaño
-        .on('resize', this.nextSlide) // pasamos al siguiente slide
-        .on('resize', this.prevSlide); // y volvemos al anterior (esto es para que posicione bien el slide)
+      $(window).on('resize', function() {
+        setSize(); // re calculamos el tamaño
+        nextSlide(); // pasamos al siguiente slide
+        prevSlide(); // y volvemos al anterior (esto es para que posicione bien el slide)
+      })
     }
 
     // creamos el navigation si esta activado
     if (this.navigation) {
-      this.setNavigation();
+      setNavigation();
     }
 
+    // iniciamos el desplazamiento por teclas si esta activado
     if (this.keys) {
-      $(window).keydown(function(ev) {
-        if (axis == 'X') {
-          if (ev.which == '39') {
-            ev.preventDefault();
-            nextSlide();
-          }
-          else if (ev.which == '37') {
-            ev.preventDefault();
-            prevSlide();
-          }
-        }
-        else if (axis == 'Y') {
-          if (ev.which == '40') {
-            ev.preventDefault();
-            nextSlide();
-          }
-          else if (ev.which == '38') {
-            ev.preventDefault();
-            prevSlide();
-          }
-        }
-      })
+      setKeys();
     }
   }
 
