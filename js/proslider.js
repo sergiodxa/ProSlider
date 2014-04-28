@@ -3,6 +3,7 @@ var Slider = function(propieties) {
   // Parametros
   this.direction    = propieties.direction || 'horizontal';
   this.element      = propieties.element || '.slider li';
+  this.keys         = propieties.keys || false;
   this.minis        = propieties.minis;
   this.navContainer = propieties.navContainer || '.slider-nav';
   this.navigation   = propieties.navigation || false;
@@ -447,6 +448,31 @@ var Slider = function(propieties) {
     // creamos el navigation si esta activado
     if (this.navigation) {
       this.setNavigation();
+    }
+
+    if (this.keys) {
+      $(window).keydown(function(ev) {
+        if (axis == 'X') {
+          if (ev.which == '39') {
+            ev.preventDefault();
+            nextSlide();
+          }
+          else if (ev.which == '37') {
+            ev.preventDefault();
+            prevSlide();
+          }
+        }
+        else if (axis == 'Y') {
+          if (ev.which == '40') {
+            ev.preventDefault();
+            nextSlide();
+          }
+          else if (ev.which == '38') {
+            ev.preventDefault();
+            prevSlide();
+          }
+        }
+      })
     }
   }
 
