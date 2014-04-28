@@ -133,14 +133,20 @@
     <a id="prev-vertical">&lt;</a>
     <a id="next-vertical">&gt;</a>
   </div>
+<<<<<<< HEAD
   <script src="./libs/jquery.touchSwipe.min.js"></script>
   <script src="./js/proslider.js"></script>
+=======
+  <script src="libs/jquery.touchSwipe.min.js"></script>
+  <script src="js/proslider.js"></script>
+>>>>>>> ae1738f2345d0c6171520521703d2510e97008c8
   <script>
     var horizontalSlide = new Slider({
       direction   : 'horizontal',
       element     : '#slider-horizontal ul li',
-      navigation  : true,
+      keys        : true,
       navContainer: '#slider-horizontal .nav',
+      navigation  : true,
       nextBtn     : '#next-horizontal',
       prevBtn     : '#prev-horizontal',
       responsive  : true,
@@ -152,8 +158,9 @@
     var verticalSlide = new Slider({
       direction   : 'vertical',
       element     : '#slider-vertical ul li',
-      navigation  : true,
+      keys        : true,
       navContainer: '#slider-vertical .nav',
+      navigation  : true,
       nextBtn     : '#next-vertical',
       prevBtn     : '#prev-vertical',
       responsive  : true,
