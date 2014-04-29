@@ -1,18 +1,21 @@
 var Slider = function(propieties) {
 
+  propieties = propieties || {};
+
   // Parametros
-  this.direction    = propieties.direction || 'horizontal';
-  this.element      = propieties.element || '.slider li';
-  this.keys         = propieties.keys || false;
-  this.minis        = propieties.minis;
-  this.navContainer = propieties.navContainer || '.slider-nav';
-  this.navigation   = propieties.navigation || false;
-  this.nextBtn      = propieties.nextBtn || '.next-btn';
-  this.prevBtn      = propieties.prevBtn || '.prev-btn';
-  this.responsive   = propieties.responsive || false;
-  this.speed        = propieties.speed || 0.5;
-  this.timer        = propieties.timer*1000 || false;
-  this.touch        = propieties.touch || false;
+  this.direction      = propieties.direction || 'horizontal';
+  this.element        = propieties.element || '.slider li';
+  this.keys           = propieties.keys || false;
+  this.minis          = propieties.minis || false;
+  this.minisContainer = propieties.minisContainer || '.minis';
+  this.navContainer   = propieties.navContainer || '.slider-nav';
+  this.navigation     = propieties.navigation || false;
+  this.nextBtn        = propieties.nextBtn || '.next-btn';
+  this.prevBtn        = propieties.prevBtn || '.prev-btn';
+  this.responsive     = propieties.responsive || false;
+  this.speed          = propieties.speed || 0.5;
+  this.timer          = propieties.timer*1000 || false;
+  this.touch          = propieties.touch || false;
 
   // Objetos de jQuery
   var $container    = $(this.element).parent();
