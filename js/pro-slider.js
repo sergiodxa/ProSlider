@@ -1,8 +1,9 @@
-var Slider = function(propieties) {
+var proSlider = function(propieties) {
 
   propieties = propieties || {};
 
   // Parametros
+  this.controler      = propieties.controller || '.js-controller';
   this.direction      = propieties.direction || 'horizontal';
   this.element        = propieties.element || '.slider li';
   this.keys           = propieties.keys || false;
@@ -11,6 +12,8 @@ var Slider = function(propieties) {
   this.navContainer   = propieties.navContainer || '.slider-nav';
   this.navigation     = propieties.navigation || false;
   this.nextBtn        = propieties.nextBtn || '.next-btn';
+  this.pauseBtn       = propieties.pauseBtn || '.pause-btn';
+  this.playBtn        = propieties.playBtn || '.play-btn';
   this.prevBtn        = propieties.prevBtn || '.prev-btn';
   this.responsive     = propieties.responsive || false;
   this.speed          = propieties.speed || 0.5;
@@ -19,10 +22,20 @@ var Slider = function(propieties) {
 
   // Objetos de jQuery
   var $container    = $(this.element).parent();
+  var $controller   = $(this.controller);
   var $element      = $(this.element);
   var $navContainer = $(this.navContainer);
   var $nextBtn      = $(this.nextBtn);
+  var $pauseBtn     = $(this.pauseBtn);
+  var $playBtn      = $(this.playBtn);
   var $prevBtn      = $(this.prevBtn);
+
+  // Definición de variables
+  var axis;
+  var interval;
+  var timer = this.timer || 2500;
+  var totalHeight;
+  var totalWidth
 
 
   /* ============================================================= */
@@ -44,9 +57,6 @@ var Slider = function(propieties) {
   /* ============================================================= */
 
 
-  // definimos la variable axis
-  var axis;
-
   // si la dirección es horizontal definimos axis como X
   if (this.direction == 'horizontal')  {
     axis = 'X';
@@ -59,8 +69,6 @@ var Slider = function(propieties) {
 
   /* ============================================================= */
 
-  var totalHeight,
-      totalWidth;
 
   // definimos el método para calcular el ancho y alto
   this.setSize = function() {
@@ -190,7 +198,7 @@ var Slider = function(propieties) {
     }
     if (this.timer) {
       clearAutoSlide();
-      setAutoSlide();
+      setAutoSlide(this.timer);
     }
   }
   var nextSlide = this.nextSlide; // asignamos el método nextSlide para usar de forma interna.
@@ -297,7 +305,7 @@ var Slider = function(propieties) {
     }
     if (this.timer) {
       clearAutoSlide();
-      setAutoSlide();
+      setAutoSlide(this.timer);
     }
   }
   var prevSlide = this.prevSlide; // asignamos el método prevSlide para usar de forma interna.
@@ -306,10 +314,9 @@ var Slider = function(propieties) {
   /* ============================================================= */
 
 
-  var interval;
   // definimos el método para setear el autoslide
-  this.setAutoSlide = function() {
-    interval = setInterval(this.nextSlide, this.timer);
+  this.setAutoSlide = function(timer) {
+    interval = setInterval(nextSlide, timer);
   }
   var setAutoSlide = this.setAutoSlide; // asignamos el método setAutoSlide para usar de forma interna.
 
@@ -322,6 +329,23 @@ var Slider = function(propieties) {
     clearInterval(interval);
   }
   var clearAutoSlide = this.clearAutoSlide; // asignamos el método clearAutoSlide para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  // definimos el método para setear los controladores de play y pausa
+  this.setControllers = function(personalizedTimer) {
+
+    personalizedTimer = personalizedTimer*1000 || timer;
+    $pauseBtn.on('click', function() {
+      clearAutoSlide();
+    });
+    $playBtn.on('click', function() {
+      setAutoSlide(personalizedTimer);
+    });
+  }
+  var setControllers = this.setControllers; // asignamos el método setControllers para usar de forma interna.
 
 
   /* ============================================================= */
@@ -443,6 +467,15 @@ var Slider = function(propieties) {
   /* ============================================================= */
 
 
+  this.clearNavigation = function() {
+    $navContainer.html('');
+  }
+  var clearNavigation = this.clearNavigation; // asignamos el método clearNavigation para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
   // definimos el método para activar el desplazamiento por teclas
   this.setKeys = function() {
     // detectamos el evento keydown en toda la ventana
@@ -486,6 +519,24 @@ var Slider = function(propieties) {
       }
     });
   }
+  var setKeys = this.setKeys; // asignamos el método setKeys para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  this.disabledKeys = function() {
+    $(window).unbind('keydown');
+  }
+  var disabledKeys = this.disabledKeys; // asignamos el método disabledKeys para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  // definimos el método para activar las miniaturas
+  this.setMiniatures = function() {}
+  var setMiniatures = this.setMiniatures; // asignamos el método setMiniatures para usar de forma interna. 
 
 
   /* ============================================================= */
@@ -511,7 +562,8 @@ var Slider = function(propieties) {
 
     // iniciamos el autoslide si esta seteado un timer
     if (this.timer) {
-      setAutoSlide();
+      setAutoSlide(this.timer);
+      setControllers();
     }
 
     // asignamos el método setSize el evento resize si el soporte para responsive esta activado.

@@ -104,6 +104,15 @@
     .slider-nav-list-link.active {
       background: #101010 !important;
     }
+    .js-controller {
+      position: absolute;
+      right: 10px;
+      text-align: right;
+      top: 10px;
+    }
+    .js-controller span {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -119,6 +128,10 @@
     <div class="nav"></div>
     <a id="prev-horizontal">&lt;</a>
     <a id="next-horizontal">&gt;</a>
+    <div class="js-controller">
+      <span class="pause-btn">Pause</span>
+      <span class="play-btn">Play</span>
+    </div>
   </div>
   <div id="slider-vertical">
     <ul>
@@ -136,7 +149,8 @@
   <script src="./libs/jquery.touchSwipe.min.js"></script>
   <script src="./js/pro-slider.js"></script>
   <script>
-    var horizontalSlide = new Slider({
+    var horizontalSlide = new proSlider({
+      controller  : '.js-controller',
       direction   : 'horizontal',
       element     : '#slider-horizontal ul li',
       keys        : true,
@@ -149,8 +163,10 @@
       touch       : true
     });
     horizontalSlide.initialize();
+    horizontalSlide.setControllers();
+    //setTimeout(horizontalSlide.disabledKeys, 3000);
 
-    var verticalSlide = new Slider({
+    var verticalSlide = new proSlider({
       direction   : 'vertical',
       element     : '#slider-vertical ul li',
       keys        : true,
