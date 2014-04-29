@@ -269,26 +269,10 @@ header {
   .desplegar-menu {
     display: block;
   }
-  #demo .scroll {
-    display : none;
-  }
-  #demo .mensaje {
-    display : block;
-  }
 }
 @media screen and (max-width: 540px) {
   #descargar .subtitulo {
     font-size : 1.25rem;
-  }
-}
-@media screen and (max-height: 330px) {
-  #demo .mensaje {
-    font-size : .9rem;
-  }
-}
-@media screen and (max-height: 280px) {
-  #demo .mensaje {
-    font-size : .75rem;
   }
 }
 @media screen and (max-width: 430px) {

@@ -1,6 +1,6 @@
 function establecerAlto(){var a=window.innerHeight;$(".seccion").css("height",a+"px")}$(document).on("ready",function(){establecerAlto(),$(".desplegar-menu").on("click",function(){$(".menu-navegacion").toggleClass("desplegado")})}),$(window).on("resize",function(){establecerAlto()});
 
-var horizontalSlide = new Slider({
+var horizontalSlide = new proSlider({
   direction   : 'horizontal',
   element     : '#slider-horizontal ul li',
   navigation  : true,
@@ -13,7 +13,7 @@ var horizontalSlide = new Slider({
 });
 horizontalSlide.initialize();
 
-var verticalSlide = new Slider({
+var verticalSlide = new proSlider({
   direction   : 'vertical',
   element     : '#slider-vertical ul li',
   navigation  : true,

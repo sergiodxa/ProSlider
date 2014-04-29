@@ -33,9 +33,10 @@ var proSlider = function(propieties) {
   // Definición de variables
   var axis;
   var interval;
-  var timer = this.timer || 2500;
-  var totalHeight;
-  var totalWidth
+  var sizeValue;
+  var targetSlide;
+  var timer = this.timer || 1500;
+  var totalSize;
 
 
   /* ============================================================= */
@@ -74,13 +75,8 @@ var proSlider = function(propieties) {
   this.setSize = function() {
     // calculamos el ancho si el slider es horizontal
     if (axis == 'X') {
-      // definimos la variable totalWidth
-      totalWidth = parseInt($container.parent().css('width')) * parseInt($element.length);
-
-      /* sumamos el ancho de todos los elementos -> código en desuso, dejado por las dudas
-      for (var i = 0; i < $element.length; ++i) {
-        totalWidth += parseInt($($element[i]).css('width'));
-      }*/
+      // calculamos el tamaño total en ancho del contenedor
+      totalSize = parseInt($container.parent().css('width')) * parseInt($element.length);
 
       // le damos a todos los elementos del slider float: left
       $element.css({
@@ -90,22 +86,18 @@ var proSlider = function(propieties) {
 
       // le colocamos al contenedor el ancho total
       $container.css({
-        'width': totalWidth+'px'
+        'width': totalSize+'px'
       });
     }
     // calculamos el alto si el slider es vertical
     else if (axis == 'Y') {
-      // definimos la variable totalHeight
-      totalHeight = 0;
 
-      // sumamos el alto de todos los elementos
-      for (var i = 0; i < $element.length; ++i) {
-        totalHeight += parseInt($($element[i]).css('height'));
-      }
+      // calculamos el tamaño total en altura del contenedor
+      totalSize = parseInt($container.parent().css('height')) * parseInt($element.length);
 
       // le colocamos al contenedor el alto total
       $container.css({
-        'height': totalHeight+'px'
+        'height': totalSize+'px'
       });
     }
   }
@@ -115,91 +107,67 @@ var proSlider = function(propieties) {
   /* ============================================================= */
 
 
+  this.goToSlide = function(slide) {
+    if (axis == 'X') {
+      // obtenemos el ancho del siguiente elemento del slide
+      sizeValue = parseInt($($element[slide]).css('width'));
+    }
+
+    if (axis == 'Y') {
+      // obtenemos el alto del siguiente elemento del slide
+      sizeValue = parseInt($($element[slide]).css('height'));
+    }
+
+    sizeValue = sizeValue*(slide);
+
+    // trasladamos en el eje X/Y el contenido de $container
+    $container.css({
+      '-webkit-transform': 'translate'+axis+'(-'+sizeValue+'px)',
+      '-moz-transform': 'translate'+axis+'(-'+sizeValue+'px)',
+      '-ms-transform': 'translate'+axis+'(-'+sizeValue+'px)',
+      '-o-transform': 'translate'+axis+'(-'+sizeValue+'px)',
+      'transform': 'translate'+axis+'(-'+sizeValue+'px)',
+    });
+
+    // al elemento actual le quitamos la clase .js-active-slide
+    $($element).removeClass('.js-active-slide');
+
+    // al slide actual le agregamos la clase .js-active-slide
+    $($element[slide]).addClass('.js-active-slide');
+
+    // obtenemos la lsita de links del nav
+    var $navListLink = $navContainer.find('.slider-nav-list-link');
+
+    // les quitamos la clase active
+    $navListLink.removeClass('active');
+
+    // y al que corresponde con el slide actual le agregamos la clase active
+    $($navListLink[slide]).addClass('active');
+  }
+  var goToSlide = this.goToSlide; // asignamos el método goToSlide para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
   // definimos el método para pasar al siguiente slide
   this.nextSlide = function() {
 
-    // definimos la variable actualSlide
-    var actualSlide;
-
-    // comprobamos cual slide es el actual y guardamos su posición en la variable actualSlide
+    // comprueba cual es el slide actual y se guarda en la variable targetSlide cual es el slide siguiente
     for (var i = 0; i < $element.length; ++i) {
       if ($($element[i]).hasClass('.js-active-slide')) {
-        actualSlide = i;
-      }
-    }
-
-    // comprobamos que el elemento actual no sea el último
-    if (actualSlide != $element.length-1) {
-
-      // definimos la variable nextValue
-      var nextValue;
-
-      if (axis == 'X') {
-      // obtenemos el ancho del siguiente elemento del slide
-        var nextValue = parseInt($($element[actualSlide]).next().css('width'));
-        nextValue     = nextValue*(actualSlide+1);
-      }
-
-      if (axis == 'Y') {
-      // obtenemos el alto del siguiente elemento del slide
-        var nextValue = parseInt($($element[actualSlide]).next().css('height'));
-        nextValue     = nextValue*(actualSlide+1);
-      }
-
-      // trasladamos en el eje X el contenido de $container
-      $container.css({
-        '-webkit-transform': 'translate'+axis+'(-'+nextValue+'px)',
-        '-moz-transform': 'translate'+axis+'(-'+nextValue+'px)',
-        '-ms-transform': 'translate'+axis+'(-'+nextValue+'px)',
-        '-o-transform': 'translate'+axis+'(-'+nextValue+'px)',
-        'transform': 'translate'+axis+'(-'+nextValue+'px)',
-      });
-
-      // al elemento actual le quitamos la clase .js-active-slide
-      $($element).removeClass('.js-active-slide');
-
-      // al siguiente elemento le agregamos la clase .js-active-slide
-      $($element[actualSlide]).next().addClass('.js-active-slide');
-    }
-    // si es el último
-    else {
-
-      // trasladamos en el eje X a 0 el contenido de $container
-      $container.css({
-        '-webkit-transform': 'translate'+axis+'(0px)',
-        '-moz-transform': 'translate'+axis+'(0px)',
-        '-ms-transform': 'translate'+axis+'(0px)',
-        '-o-transform': 'translate'+axis+'(0px)',
-        'transform': 'translate'+axis+'(0px)',
-      });
-
-      // al elemento actual le quitamos la clase .js-active-slide
-      $($element).removeClass('.js-active-slide');
-
-      // al primer elemento le agregamos la clase .js-active-slide
-      $($element[0]).addClass('.js-active-slide');
-    }
-
-    // cambiamos el slider-nav-list-link activo
-    var $navListLink = $navContainer.find('.slider-nav-list-link')
-    for (var i = 0; i < $navListLink.length; ++i) {
-      if (actualSlide == $navListLink.length-1) {
-        if ($($navListLink[i]).data('slide') == 0) {
-          $navListLink.removeClass('active');
-          $($navListLink[i]).addClass('active');
+        if (i >= $element.length-1) {
+          targetSlide = 0;
         }
-      }
-      else {
-        if ($($navListLink[i]).data('slide') == actualSlide+1) {
-          $navListLink.removeClass('active');
-          $($navListLink[i]).addClass('active');
+        else {
+          targetSlide = i + 1;
         }
       }
     }
-    if (this.timer) {
-      clearAutoSlide();
-      setAutoSlide(this.timer);
-    }
+
+    // llamamos al método goToSlide para ir al slide siguiente
+    goToSlide(targetSlide);
+
   }
   var nextSlide = this.nextSlide; // asignamos el método nextSlide para usar de forma interna.
 
@@ -210,103 +178,21 @@ var proSlider = function(propieties) {
   // definimos el método para volver al anterior slide
   this.prevSlide = function() {
 
-    // definimos la variable actualSlide
-    var actualSlide;
-
-    // comprobamos cual slide es el actual y guardamos su posición en la variable actualSlide
+    // comprueba cual es el slide actual y se guarda en la variable targetSlide cual es el slide anterior
     for (var i = 0; i < $element.length; ++i) {
       if ($($element[i]).hasClass('.js-active-slide')) {
-        actualSlide = i;
-      }
-    }
-
-    // comprobamos que el elemento actual no sea el último
-    if (actualSlide != 0) {
-
-      // definimos la variable prevValue
-      var prevValue;
-
-      if (axis == 'X') {
-      // obtenemos el ancho del siguiente elemento del slide
-        var prevValue = parseInt($($element[actualSlide]).prev().css('width'));
-        prevValue     = prevValue*(actualSlide-1);
-      }
-
-      if (axis == 'Y') {
-      // obtenemos el alto del siguiente elemento del slide
-        var prevValue = parseInt($($element[actualSlide]).prev().css('height'));
-        prevValue     = prevValue*(actualSlide-1);
-      }
-
-      // trasladamos en el eje X el contenido de $container
-      $container.css({
-        '-webkit-transform': 'translate'+axis+'(-'+prevValue+'px)',
-        '-moz-transform': 'translate'+axis+'(-'+prevValue+'px)',
-        '-ms-transform': 'translate'+axis+'(-'+prevValue+'px)',
-        '-o-transform': 'translate'+axis+'(-'+prevValue+'px)',
-        'transform': 'translate'+axis+'(-'+prevValue+'px)',
-      });
-
-      // al elemento actual le quitamos la clase .js-active-slide
-      $($element).removeClass('.js-active-slide');
-
-      // al siguiente elemento le agregamos la clase .js-active-slide
-      $($element[actualSlide]).prev().addClass('.js-active-slide');
-    }
-    // si es el último
-    else {
-
-      // definimos la variable lastValue
-      var lastValue;
-
-      if (axis == 'X') {
-      // obtenemos el ancho del último elemento del slide
-        var lastValue = parseInt($($element[$element.length-1]).css('width'));
-        lastValue     = totalWidth-lastValue;
-      }
-
-      if (axis == 'Y') {
-      // obtenemos el alto del último elemento del slide
-        var lastValue = parseInt($($element[$element.length-1]).css('height'));
-        lastValue     = totalHeight-lastValue;
-      }
-
-      // trasladamos en el eje X a 0 el contenido de $container
-      $container.css({
-        '-webkit-transform': 'translate'+axis+'(-'+lastValue+'px)',
-        '-moz-transform': 'translate'+axis+'(-'+lastValue+'px)',
-        '-ms-transform': 'translate'+axis+'(-'+lastValue+'px)',
-        '-o-transform': 'translate'+axis+'(-'+lastValue+'px)',
-        'transform': 'translate'+axis+'(-'+lastValue+'px)',
-      });
-
-      // al elemento actual le quitamos la clase .js-active-slide
-      $($element).removeClass('.js-active-slide');
-
-      // al primer elemento le agregamos la clase .js-active-slide
-      $($element[$element.length-1]).addClass('.js-active-slide');
-    }
-
-    // cambiamos el slider-nav-list-link activo
-    var $navListLink = $navContainer.find('.slider-nav-list-link')
-    for (var i = 0; i < $navListLink.length; ++i) {
-      if (actualSlide == 0) {
-        if ($($navListLink[i]).data('slide') == $navListLink.length-1) {
-          $navListLink.removeClass('active');
-          $($navListLink[i]).addClass('active');
+        if (i <= 0) {
+          targetSlide = $element.length-1;
         }
-      }
-      else {
-        if ($($navListLink[i]).data('slide') == actualSlide-1) {
-          $navListLink.removeClass('active');
-          $($navListLink[i]).addClass('active');
+        else {
+          targetSlide = i - 1;
         }
       }
     }
-    if (this.timer) {
-      clearAutoSlide();
-      setAutoSlide(this.timer);
-    }
+
+    // llamamos al método goToSlide para ir al slide anterior
+    goToSlide(targetSlide);
+
   }
   var prevSlide = this.prevSlide; // asignamos el método prevSlide para usar de forma interna.
 
@@ -406,60 +292,14 @@ var proSlider = function(propieties) {
     // al primer navLink le agregamos la clase active
     $($navLinks[0]).addClass('active');
 
-    // recorremos todos los slider-nav-list-link
-    for (var i = 0; i < $navLinks.length; ++i) {
+    // les asignamos a los links del nav que al hacer click se objeta el data-slide y se vaya a ese slide
+    $($navLinks).on('click', function() {
+      // obtenemos el targetSlide
+      targetSlide = $(this).data('slide');
 
-      // le asignamos a cada uno una función onclick
-      $($navLinks[i]).on('click', function() {
-
-        // les quitamos la clase active
-        $navLinks.removeClass('active');
-
-        // se la agregamos al actual
-        $(this).addClass('active');
-
-        // definimos actualSlide como el slide objetivo menos 1
-        var actualSlide = $(this).data('slide')-1;
-
-        // definimos la variable nextValue
-        var nextValue;
-
-        if (axis == 'X') {
-        // obtenemos el ancho del siguiente elemento del slide
-          var nextValue = parseInt($($element[actualSlide]).next().css('width'));
-          nextValue     = nextValue*(actualSlide+1);
-        }
-
-        if (axis == 'Y') {
-        // obtenemos el alto del siguiente elemento del slide
-          var nextValue = parseInt($($element[actualSlide]).next().css('height'));
-          nextValue     = nextValue*(actualSlide+1);
-        }
-
-        // trasladamos en el eje X/Y el contenido de $container
-        $container.css({
-          '-webkit-transform': 'translate'+axis+'(-'+nextValue+'px)',
-          '-moz-transform': 'translate'+axis+'(-'+nextValue+'px)',
-          '-ms-transform': 'translate'+axis+'(-'+nextValue+'px)',
-          '-o-transform': 'translate'+axis+'(-'+nextValue+'px)',
-          'transform': 'translate'+axis+'(-'+nextValue+'px)',
-        });
-
-        // al elemento actual le quitamos la clase .js-active-slide
-        $($element).removeClass('.js-active-slide');
-
-        // al siguiente elemento le agregamos la clase .js-active-slide
-        if (actualSlide == -1) {
-          // si actualSlide es 0 le agregamos la clase al elemento en posición 0
-          $($element[0]).addClass('.js-active-slide');
-        }
-        else {
-          // en cualquier otro caso se lo agregamos al siguiente
-          $($element[actualSlide]).next().addClass('.js-active-slide');
-        }
-
-      });
-    }
+      // llamamos al método goToSlide para ir al slide objetivo
+      goToSlide(targetSlide);
+    });
   }
   var setNavigation = this.setNavigation; // asignamos el método setNavigation para usar de forma interna.
 
@@ -572,7 +412,7 @@ var proSlider = function(propieties) {
         setSize(); // re calculamos el tamaño
         nextSlide(); // pasamos al siguiente slide
         prevSlide(); // y volvemos al anterior (esto es para que posicione bien el slide)
-      })
+      });
     }
 
     // creamos el navigation si esta activado

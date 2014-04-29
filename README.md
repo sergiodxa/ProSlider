@@ -1,7 +1,7 @@
 # ProSlider v1.0.0
 
 ## Dependencias
-Para poder empezar a utilizarlo se necesita cargar jQuery en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
+Para poder empezar a utilizarlo se necesita cargar [jQuery](http://jquery.com) en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
 
 Al final te tienen que quedar estas líneas para cargar los archivos.
 
@@ -16,7 +16,7 @@ Para poder empezar a usar proSlider es necesario crear un nuevo objeto usando la
 ```javascript
 var miSlider = new proSlider();
 ```
-Con esto tenemos un nuevo objeto llamado miSlider hecho en base a la clase proSlider. Luego de esto es necesario inicializar el slider utilizando el método initialize().
+Con esto tenemos un nuevo objeto llamado miSlider hecho en base a la clase proSlider. Luego de esto es necesario inicializar el slider utilizando el método .initialize().
 ```javascript
 miSlider.initialize();
 ```
@@ -54,19 +54,22 @@ proSlider({
 ```
 
 ## Métodos
-La clase proSlider posee varios métodos públicos que pudes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a initialize(). A continuación una lista de métodos con su función:
+La clase proSlider posee varios métodos públicos que pudes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
 
 ### .setSize()
-Permite calcular el alto/ancho total del slider dependiendo de si es horizontal o vertical. Se ejecuta al usar initialize() y cada vez que se redimensione el navegador si esta el responsive activado.
+Permite calcular el alto/ancho total del slider dependiendo de si es horizontal o vertical. Se ejecuta al usar .initialize() y cada vez que se redimensione el navegador si esta el responsive activado.
+
+### .goToSlide()
+Recibe el slide objetivo al que se quiere ir y cambia a ese slide.
 
 ### .nextSlide() y .prevSlide()
-Métodos similiares que sirven para pasar al siguiente y anterior slide respectivamente. Se asigan a nextBtn y prevBtn al usar initialize().
+Métodos similiares que sirven para pasar al siguiente y anterior slide respectivamente. Se asigan a nextBtn y prevBtn al usar .initialize() y calculan cual es el slide actual, cual es el objetivo y llaman al método .goToSlide().
 
 ### .setAutoSlide() y .clearAutoSlide()
 Permiten activar que el slider funcione solo cada X tiempo o detener este funcionamiento. El primero recibe un parámetro de tipo Int en milisegundos para determinar cada cuanto pase al siguiente slide.
 
 ### .setControllers()
-Asigna a playBtn y pauseBtn los métodos .setAutoSlide() y .clearAutoSlide(). Este método puede recibir un Int en segundos para pasarle a .setAutoSlide() en milisegundos, si no lo recibe utiliza el parámetro timer del objeto (en caso de ser false usa 2.5s).
+Asigna a playBtn y pauseBtn los métodos .setAutoSlide() y .clearAutoSlide(). Este método puede recibir un Int en segundos para pasarle a .setAutoSlide() en milisegundos, si no lo recibe utiliza el parámetro timer del objeto (en caso de ser false usa 1.5s).
 
 ### .activeTouch()
 Activa la detección de eventos swipe en left y right para un slider horizontal o up y down para un slider vertical y ejecuta el método .nextSlide() o .prevSlide() según cual se realice.
