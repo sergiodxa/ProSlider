@@ -188,6 +188,10 @@ var Slider = function(propieties) {
         }
       }
     }
+    if (this.timer) {
+      clearAutoSlide();
+      setAutoSlide();
+    }
   }
   var nextSlide = this.nextSlide; // asignamos el método nextSlide para usar de forma interna.
 
@@ -291,6 +295,10 @@ var Slider = function(propieties) {
         }
       }
     }
+    if (this.timer) {
+      clearAutoSlide();
+      setAutoSlide();
+    }
   }
   var prevSlide = this.prevSlide; // asignamos el método prevSlide para usar de forma interna.
 
@@ -298,11 +306,22 @@ var Slider = function(propieties) {
   /* ============================================================= */
 
 
+  var interval;
   // definimos el método para setear el autoslide
   this.setAutoSlide = function() {
-    setInterval(this.nextSlide, this.timer);
+    interval = setInterval(this.nextSlide, this.timer);
   }
   var setAutoSlide = this.setAutoSlide; // asignamos el método setAutoSlide para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  // definimos el método para parar el autoslide
+  this.clearAutoSlide = function() {
+    clearInterval(interval);
+  }
+  var clearAutoSlide = this.clearAutoSlide; // asignamos el método clearAutoSlide para usar de forma interna.
 
 
   /* ============================================================= */
