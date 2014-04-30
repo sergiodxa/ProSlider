@@ -23,7 +23,6 @@ var verticalSlide = new proSlider({
   prevBtn     : '#prev-vertical',
   responsive  : true,
   speed       : 0.5,
-  touch       : true,
-  timer       : 1
+  touch       : true
 });
 verticalSlide.initialize();

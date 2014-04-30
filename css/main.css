@@ -353,13 +353,13 @@ code pre {
 }
 #slider-vertical,
 #slider-horizontal {
-  height  : 400px;
   margin  : 0 auto;
   position: relative;
   width   : 100%;
 }
 #slider-vertical ul,
 #slider-horizontal ul {
+  font-size : 0;
   list-style: none;
   margin    : 0;
   overflow  : hidden;
@@ -368,7 +368,6 @@ code pre {
 }
 #slider-vertical ul li,
 #slider-horizontal ul li {
-  height: 400px;
 }
 #slider-vertical ul li:active,
 #slider-horizontal ul li:active {
@@ -380,11 +379,11 @@ code pre {
   right : 0;
 }
 #slider-vertical .nav {
-  left  : 0;
+  left  : 5px;
   bottom: calc(50% - 210px/2);
 }
 .nav {
-  bottom  : 0;
+  top  : 0;
   left    : 0;
   position: absolute;
   right   : 0;
@@ -402,7 +401,11 @@ code pre {
   -webkit-border-radius: 50%;
   -moz-border-radius   : 50%;
   border-radius        : 50%;
+  -webkit-box-shadow   : 0 0 5px 1px #101010;
+  -moz-box-shadow      : 0 0 5px 1px #101010;
+  box-shadow           : 0 0 5px 1px #101010;
   color                : #000;
+  cursor               : pointer;
   display              : inline-block;
   font-size            : 0;
   height               : .75rem;
@@ -411,4 +414,11 @@ code pre {
 }
 .slider-nav-list-link.active {
   background: #101010 !important;
+  -webkit-box-shadow   : 0 0 5px 1px #fdfdfd;
+  -moz-box-shadow      : 0 0 5px 1px #fdfdfd;
+  box-shadow           : 0 0 5px 1px #fdfdfd;
+}
+
+img {
+  max-width: 100%;
 }

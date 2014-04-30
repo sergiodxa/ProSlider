@@ -65,6 +65,8 @@ var proSlider = function(propieties) {
   // en caso contrario si es vertical definimos axis como Y
   else if (this.direction == 'vertical') {
     axis = 'Y';
+    // si el slide es vertical le asignamos un alto fijo igual al del primer slide
+    //$container.parent().css('height', $($element[0]).css('height'));
   }
 
 
@@ -75,10 +77,15 @@ var proSlider = function(propieties) {
   this.setSize = function() {
     // calculamos el ancho si el slider es horizontal
     if (axis == 'X') {
-      // calculamos el tamaño total en ancho del contenedor
-      totalSize = parseInt($container.parent().css('width')) * parseInt($element.length);
 
-      // le damos a todos los elementos del slider float: left
+      totalSize = 0;
+      
+      // calculamos el tamaño total en ancho del contenedor
+      for (var i = 0; i < $element.length; ++i) {
+        totalSize += parseInt($container.parent().css('width'));
+      }
+
+      // le damos a todos los elementos del slider float: left y un ancho
       $element.css({
         'float': 'left',
         'width': $container.parent().css('width')
@@ -86,14 +93,22 @@ var proSlider = function(propieties) {
 
       // le colocamos al contenedor el ancho total
       $container.css({
-        'width': totalSize+'px'
+        'width' : totalSize+'px'
       });
     }
     // calculamos el alto si el slider es vertical
     else if (axis == 'Y') {
 
-      // calculamos el tamaño total en altura del contenedor
-      totalSize = parseInt($container.parent().css('height')) * parseInt($element.length);
+      $($container.parent()).css('height', $($element[0]).css('height'));
+
+      totalSize = 0;
+      
+      // calculamos el tamaño total en alto del contenedor
+      for (var i = 0; i < $element.length; ++i) {
+        var height = parseInt($($element[i]).css('height'));
+        $($element[i]).attr('data-height', height);
+        totalSize += height;
+      }
 
       // le colocamos al contenedor el alto total
       $container.css({
@@ -109,16 +124,24 @@ var proSlider = function(propieties) {
 
   this.goToSlide = function(slide) {
     if (axis == 'X') {
+      // ajustamos el alto al del elemento actual
+      $container.parent().css('height', $($element[slide]).css('height'));
       // obtenemos el ancho del siguiente elemento del slide
-      sizeValue = parseInt($($element[slide]).css('width'));
+      sizeValue = 0;
+      //sizeValue = parseInt($($element[slide]).css('width'));
+      for (var i = 0; i < slide; ++i) {
+        sizeValue += parseInt($($element[i]).css('width'));
+      }
     }
 
     if (axis == 'Y') {
+      sizeValue = 0;
       // obtenemos el alto del siguiente elemento del slide
-      sizeValue = parseInt($($element[slide]).css('height'));
+      //sizeValue = parseInt($($element[slide]).css('height'));
+      for (var i = 0; i < slide; ++i) {
+        sizeValue += $($element[i]).data('height');
+      }
     }
-
-    sizeValue = sizeValue*(slide);
 
     // trasladamos en el eje X/Y el contenido de $container
     $container.css({
