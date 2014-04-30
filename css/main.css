@@ -45,11 +45,28 @@ footer a:hover,
 footer p {
   margin: 0;
 }
-h1,h2 {
+h1,h2,h3,h4,h5 {
   margin: 0;
+}
+h4 {
+  border-bottom: 1px solid #ECF0F1;
+  font-size: 1.5em;
+}
+h5 {
+  font-size: 1.25em;
+  margin-top: 15px;
 }
 header {
   top: 0;
+}
+code {
+  background: #34495E;
+  display: block;
+  margin: 15px;
+  padding: 10px;
+}
+code pre {
+  margin: 0;
 }
 
 /* modulo menu-navegacion */
@@ -115,7 +132,7 @@ header {
   top        : 0;
 }
 #descargar .subtitulo {
-  left       : calc(50% - 261px/2);
+  left       : calc(50% - 255px/2);
   position   : absolute;
   text-shadow: 1px 1px #2C3E50;
   top        : 65px;
@@ -173,7 +190,7 @@ header {
 }
 #demo [class*="col-"],#demo [class^=" col-"] {
   text-align  : center;
-  padding   : .5em 0;
+  padding   : .5em;
 }
 #demo .scroll,
 #documentacion .scroll {
@@ -337,7 +354,7 @@ header {
 #slider-vertical,
 #slider-horizontal {
   height  : 400px;
-  margin  : 20px auto 0;
+  margin  : 0 auto;
   position: relative;
   width   : 100%;
 }

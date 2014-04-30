@@ -21,7 +21,7 @@
 
   <section id="descargar" class="seccion">
     <div class="grupo-titulos">
-      <h1 class="titulo">ProSlider</h1>
+      <h1 class="titulo">proSlider</h1>
       <h2 class="subtitulo">Responsive y touch slider</h2>
     </div>
     <a href="./js/pro-slider.css" class="btn-descargar" target="_blank">Descargar</a>
@@ -31,38 +31,177 @@
 <section id="demo" class="seccion">
     <h3 class="titulo">Demo</h3>
     <p>
-      Este es un demo de como funcion el slider en horizontal y vertical, con y sin timer, en ambos casos, responsive y touch.
+      Este es un demo de como funciona el slider en horizontal y vertical, con y sin timer, en ambos casos, responsive y touch.
     </p>
     <article class="scroll">
-      <div id="slider-horizontal">
-        <ul>
-          <li style="background:red;">RTFM</li>
-          <li style="background:green;">LOL</li>
-          <li style="background:blue;">XD</li>
-          <li style="background:red;">RTFM</li>
-          <li style="background:green;">LOL</li>
-          <li style="background:blue;">XD</li>
-        </ul>
-        <div class="nav"></div>
-        <a id="prev-horizontal">←</a>
-        <a id="next-horizontal">→</a>
-      </div>
-      <div id="slider-vertical">
-        <ul>
-          <li style="background:red;">RTFM</li>
-          <li style="background:green;">LOL</li>
-          <li style="background:blue;">XD</li>
-          <li style="background:red;">RTFM</li>
-          <li style="background:green;">LOL</li>
-          <li style="background:blue;">XD</li>
-        </ul>
-        <div class="nav"></div>
-        <a id="prev-vertical">↑</a>
-        <a id="next-vertical">↓</a>
+      <div class="fila">
+        <div class="col-50">
+          <div id="slider-horizontal">
+            <ul>
+              <li style="background:red;">RTFM</li>
+              <li style="background:green;">LOL</li>
+              <li style="background:blue;">XD</li>
+              <li style="background:red;">RTFM</li>
+              <li style="background:green;">LOL</li>
+              <li style="background:blue;">XD</li>
+            </ul>
+            <div class="nav"></div>
+            <a id="prev-horizontal">←</a>
+            <a id="next-horizontal">→</a>
+          </div>
+          <h5>Slider horizontal con navegación, desplazamiento por teclas y touch.</h5>
+        </div>
+        <div class="col-50">
+          <div id="slider-vertical">
+            <ul>
+              <li style="background:red;">RTFM</li>
+              <li style="background:green;">LOL</li>
+              <li style="background:blue;">XD</li>
+              <li style="background:red;">RTFM</li>
+              <li style="background:green;">LOL</li>
+              <li style="background:blue;">XD</li>
+            </ul>
+            <div class="nav"></div>
+            <a id="prev-vertical">↑</a>
+            <a id="next-vertical">↓</a>
+          </div>
+          <h5>Slider vertical con navegación y autoslide</h5>
+        </div>
       </div>
     </article>
   </section>
+  <section id="documentacion" class="seccion">
+    <h3 class="titulo">ProSlider <small>v1.1.0</small></h3>
+    <article class="scroll">
+      <h4>Dependencias</h4>
+      <p>
+        Para poder empezar a utilizarlo se necesita cargar <a href="http://jquery.com">jQuery</a> en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería <a href="http://labs.rampinteractive.co.uk/touchSwipe/demos">jQuery touchSwipe</a>.
+      </p>
 
+      <p>
+        Al final te tienen que quedar estas líneas para cargar los archivos.
+      </p>
+
+      <code><pre>
+&lt;script src="ruta/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="ruta/jquery.touchSwipe.min.js"&gt;&lt;/script&gt;
+&lt;script src="ruta/proSlider.min.js"&gt;</script></pre>
+      </code>
+
+      <h4>Utilización</h4>
+      <p>
+        Para poder empezar a usar proSlider es necesario crear un nuevo objeto usando la clase proSlider que incluye la librería. Para esto se usa el siguiente código:
+      </p>
+      <code>
+      var miSlider = new proSlider();
+      </code>
+      <p>
+        Con esto tenemos un nuevo objeto llamado miSlider hecho en base a la clase proSlider. Luego de esto es necesario inicializar el slider utilizando el método .initialize().
+      </p>
+      <code>
+      miSlider.initialize();
+      </code>
+      <p>
+        Con esto ya tenemos nuestro slider funcionando usando los valores por defecto.
+      </p>
+      <h4>Personalizar slider</h4>
+      <p>
+        Para poder personalizar el slider (o tener más de uno por página) es necesario cambiar los valores por 
+      defecto del slider, para esto hay que empezar a pasarle parámetro al momento de definirlo. Ejemplo:
+      </p>
+      <code>
+      var miSlider = new proSlider({
+        direction : 'vertical',
+        element   : '#miSlider .slides .li'
+      });
+      </code>
+      <p>
+        Con esto ya tendríamos un slider que solo funciona con los elementos li dentro de .slides dentro de #miSlider y que funciona en vertical, hay muchos posibles parámetros con sus diferentes usos.
+      </p>
+
+      <h4>Parámetros</h4>
+      <p>
+        Esta es una lista de parámetros posibles a usar, sus valores por defecto y una descripción.
+      </p>
+      <code>
+        <pre>
+proSlider({
+  controller   : '.js-controller'; // cualquier elemento de html en su notación de CSS
+  direction    : 'horizontal|vertical'; // el slides solo funciona en horizontal y vertical;
+  element      : '.slider li'; // cualquier elemento de html en su notación de CSS
+  keys         : false; // true para activar que se puede mover mediante teclas
+  navContainer : '.slider nav';  // cualquier elemento de html en su notación de CSS
+  navigation   : false; // true para activar que esten los números de slides para navegar por el slider
+  nextBtn      : '.next-btn';  // cualquier elemento de html en su notación de CSS
+  pauseBtn     : '.pause-btn'; // cualquier elemento de html en su notación de CSS
+  playBtn      : '.play-btn'; // cualquier elemento de html en su notación de CSS
+  prevBtn      : '.prev-btn'; // cualquier elemento de html en su notación de CSS
+  responsive   : false; // true para activar que sea responsive
+  speed        : 0.5; // determina la velocidad de la animación, va en segundos
+  timer        : false; // cualquier valor en segundos para activarlo
+  touch        : false; // true para activar que funcione con eventos touch (requiere dependencia externa)
+});</pre>
+      </code>
+
+      <h4>Métodos</h4>
+      La clase proSlider posee varios métodos públicos que pudes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
+
+      <h5>.setSize()</h5>
+      <p>
+        Permite calcular el alto/ancho total del slider dependiendo de si es horizontal o vertical. Se ejecuta al usar .initialize() y cada vez que se redimensione el navegador si esta el responsive activado.
+      </p>
+
+      <h5>.goToSlide()</h5>
+      <p>
+        Recibe el slide objetivo al que se quiere ir y cambia a ese slide.
+      </p>
+
+      <h5>.nextSlide() y .prevSlide()</h5>
+      <p>
+        Métodos similiares que sirven para pasar al siguiente y anterior slide respectivamente. Se asigan a nextBtn y prevBtn al usar .initialize() y calculan cual es el slide actual, cual es el objetivo y llaman al método .goToSlide().
+      </p>
+
+      <h5>.setAutoSlide() y .clearAutoSlide()</h5>
+      <p>
+        Permiten activar que el slider funcione solo cada X tiempo o detener este funcionamiento. El primero recibe un parámetro de tipo Int en milisegundos para determinar cada cuanto pase al siguiente slide.
+      </p>
+
+      <h5>.setControllers()</h5>
+      <p>
+        Asigna a playBtn y pauseBtn los métodos .setAutoSlide() y .clearAutoSlide(). Este método puede recibir un Int en segundos para pasarle a .setAutoSlide() en milisegundos, si no lo recibe utiliza el parámetro timer del objeto (en caso de ser false usa 1.5s).
+      </p>
+
+      <h5>.activeTouch()</h5>
+      <p>
+        Activa la detección de eventos swipe en left y right para un slider horizontal o up y down para un slider vertical y ejecuta el método .nextSlide() o .prevSlide() según cual se realice.
+      </p>
+
+      <h5>.setNavigation()</h5>
+      <p>
+        Crea un paginador con números que identifican a cada slider y permiten navegar por el slider facilmente.
+      </p>
+
+      <h5>.clearNavigation()</h5>
+      <p>
+        Borra el paginador creado con .setNavigation().
+      </p>
+
+      <h5>.setKeys()</h5>
+      <p>
+        Asigna los métodos .nextSlide() y .prevSlide() a las flechas derecha/abajo e izquierda/arriba respectivamente dependiendo de si el slider es horizontal o vertical.
+      </p>
+
+      <h5>.disabledKeys()</h5>
+      <p>
+        Desliga los métodos .nextSlide() y .prevSlide() de las flechas asignadas con .setKeys(), este métodos afecta a todos los sliders de la página.
+      </p>
+
+      <h5>.initialize()</h5>
+      <p>
+        Asigna o ejecuta los anteriores métodos dependiendo de los parámetros pasados.
+      </p>
+    </article>
+  </section>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="./libs/jquery.touchSwipe.min.js"></script>
   <script src="./js/proSlider.min.js"></script>

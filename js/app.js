@@ -3,8 +3,9 @@ function establecerAlto(){var a=window.innerHeight;$(".seccion").css("height",a+
 var horizontalSlide = new proSlider({
   direction   : 'horizontal',
   element     : '#slider-horizontal ul li',
-  navigation  : true,
+  keys        : true,
   navContainer: '#slider-horizontal .nav',
+  navigation  : true,
   nextBtn     : '#next-horizontal',
   prevBtn     : '#prev-horizontal',
   responsive  : true,
