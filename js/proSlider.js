@@ -99,14 +99,15 @@ var proSlider = function(propieties) {
     // calculamos el alto si el slider es vertical
     else if (axis == 'Y') {
 
+      // al contenedor principal le damos la altura del primer elemento del slide
       $($container.parent()).css('height', $($element[0]).css('height'));
 
+      // definimos el tamaño total como 0 para poder empezar a sumarle valores
       totalSize = 0;
       
-      // calculamos el tamaño total en alto del contenedor
+      // calculamos el tamaño total en alto del contenedor sumando la altura de cada elemento
       for (var i = 0; i < $element.length; ++i) {
         var height = parseInt($($element[i]).css('height'));
-        $($element[i]).attr('data-height', height);
         totalSize += height;
       }
 
@@ -126,20 +127,23 @@ var proSlider = function(propieties) {
     if (axis == 'X') {
       // ajustamos el alto al del elemento actual
       $container.parent().css('height', $($element[slide]).css('height'));
-      // obtenemos el ancho del siguiente elemento del slide
+
+      // definimos sizeValue como 0 para poder empezar a sumarle valores
       sizeValue = 0;
-      //sizeValue = parseInt($($element[slide]).css('width'));
+
+      // sumamos el ancho de todos los slides anteriores al objetivo
       for (var i = 0; i < slide; ++i) {
         sizeValue += parseInt($($element[i]).css('width'));
       }
     }
 
     if (axis == 'Y') {
+      // definimos sizeValue como 0 para poder empezar a sumarle valores
       sizeValue = 0;
-      // obtenemos el alto del siguiente elemento del slide
-      //sizeValue = parseInt($($element[slide]).css('height'));
+
+      // sumamos el alto de todos los slides anteriores al objetivo
       for (var i = 0; i < slide; ++i) {
-        sizeValue += $($element[i]).data('height');
+        sizeValue += parseInt($($element[i]).css('height'));
       }
     }
 

@@ -1,4 +1,4 @@
-# ProSlider v1.1.0
+# ProSlider v1.2.0
 
 ## Dependencias
 Para poder empezar a utilizarlo se necesita cargar [jQuery](http://jquery.com) en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
