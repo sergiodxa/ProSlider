@@ -374,7 +374,6 @@ code pre {
   cursor: move;
 }
 #slider-horizontal .nav {
-  bottom: 0;
   left  : 0;
   right : 0;
 }
@@ -383,10 +382,8 @@ code pre {
   bottom: calc(50% - 210px/2);
 }
 .nav {
-  top  : 0;
-  left    : 0;
+  top     : 0;
   position: absolute;
-  right   : 0;
   width   : auto;
 }
 #slider-vertical .slider-nav-list {

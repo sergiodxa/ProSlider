@@ -17,8 +17,8 @@ horizontalSlide.initialize();
 var verticalSlide = new proSlider({
   direction   : 'vertical',
   element     : '#slider-vertical ul li',
-  navigation  : true,
   navContainer: '#slider-vertical .nav',
+  navigation  : true,
   nextBtn     : '#next-vertical',
   prevBtn     : '#prev-vertical',
   responsive  : true,

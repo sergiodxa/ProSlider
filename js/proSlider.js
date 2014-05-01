@@ -65,8 +65,6 @@ var proSlider = function(propieties) {
   // en caso contrario si es vertical definimos axis como Y
   else if (this.direction == 'vertical') {
     axis = 'Y';
-    // si el slide es vertical le asignamos un alto fijo igual al del primer slide
-    //$container.parent().css('height', $($element[0]).css('height'));
   }
 
 
@@ -268,24 +266,48 @@ var proSlider = function(propieties) {
   this.activeTouch = function() {
     // asignamos los métodos nextSlide y prevSlide a los eventos swipe
     if (axis == 'X') {
-      // asignamos los eventos a swiperight y swipeleft si el axis es X
+      // asignamos los eventos a swipeRight y swipeLeft si el axis es X
       $element.swipe({
         swipeLeft: function(event, direction, distance, duration, fingerCount) {
-          nextSlide();
+          if (fingerCount > 1) {
+            nextSlide();
+            nextSlide();
+          }
+          else {
+            nextSlide();
+          }
         },
         swipeRight: function(event, direction, distance, duration, fingerCount) {
-          prevSlide();
+          if (fingerCount > 1) {
+            prevSlide();
+            prevSlide();
+          }
+          else {
+            prevSlide();
+          }
         }
       });
     }
     else if (axis == 'Y') {
-      // asignamos los eventos a swipebottom y swipetop si el axis es Y
+      // asignamos los eventos a swipeDown y swipeUp si el axis es Y
       $element.swipe({
         swipeDown: function(event, direction, distance, duration, fingerCount) {
-          prevSlide();
+          if (fingerCount > 1) {
+            prevSlide();
+            prevSlide();
+          }
+          else {
+            prevSlide();
+          }
         },
         swipeUp: function(event, direction, distance, duration, fingerCount) {
-          nextSlide();
+          if (fingerCount > 1) {
+            nextSlide();
+            nextSlide();
+          }
+          else {
+            nextSlide();
+          }
         }
       });
     }
@@ -414,6 +436,9 @@ var proSlider = function(propieties) {
 
     // seteamos el tamaño del contenedor del slider
     setSize();
+
+    // vamos al primer slide para calcular bien la altura
+    goToSlide(0);
 
     // al primer elemento del slider le agregamos la clase .js-active-slide
     $($element[0]).addClass('.js-active-slide');
