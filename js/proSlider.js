@@ -3,12 +3,11 @@ var proSlider = function(propieties) {
   propieties = propieties || {};
 
   // Parametros
-  this.controler      = propieties.controller || '.js-controller';
   this.direction      = propieties.direction || 'horizontal';
   this.element        = propieties.element || '.slider li';
   this.keys           = propieties.keys || false;
-  this.minis          = propieties.minis || false;
-  this.minisContainer = propieties.minisContainer || '.minis';
+  //this.minis          = propieties.minis || false;
+  //this.minisContainer = propieties.minisContainer || '.minis';
   this.navContainer   = propieties.navContainer || '.slider-nav';
   this.navigation     = propieties.navigation || false;
   this.nextBtn        = propieties.nextBtn || '.next-btn';
@@ -22,7 +21,6 @@ var proSlider = function(propieties) {
 
   // Objetos de jQuery
   var $container    = $(this.element).parent();
-  var $controller   = $(this.controller);
   var $element      = $(this.element);
   var $navContainer = $(this.navContainer);
   var $nextBtn      = $(this.nextBtn);

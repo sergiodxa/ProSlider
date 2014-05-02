@@ -73,7 +73,7 @@
       </p>
 
       <p>
-        Al final te tienen que quedar estas líneas para cargar los archivos.
+        Al final te tienen que quedar los siguientes archivos.
       </p>
 
       <code><pre>
@@ -100,8 +100,7 @@
       </p>
       <h4>Personalizar slider</h4>
       <p>
-        Para poder personalizar el slider (o tener más de uno por página) es necesario cambiar los valores por 
-      defecto del slider, para esto hay que empezar a pasarle parámetro al momento de definirlo. Ejemplo:
+        Para poder personalizar el slider (o tener más de uno por página) es necesario cambiar los valores por defecto del slider, para esto hay que empezar a pasarle parámetros al momento de definirlo. Ejemplo:
       </p>
       <code>
       var miSlider = new proSlider({
@@ -115,37 +114,36 @@
 
       <h4>Parámetros</h4>
       <p>
-        Esta es una lista de parámetros posibles a usar, sus valores por defecto y una descripción.
+        Esta es una lista de los posibles parámetros a usar, sus valores por defecto y una descripción.
       </p>
       <code>
         <pre>
 proSlider({
-  controller   : '.js-controller'; // cualquier elemento de html en su notación de CSS
-  direction    : 'horizontal|vertical'; // el slides solo funciona en horizontal y vertical;
-  element      : '.slider li'; // cualquier elemento de html en su notación de CSS
-  keys         : false; // true para activar que se puede mover mediante teclas
-  navContainer : '.slider nav';  // cualquier elemento de html en su notación de CSS
-  navigation   : false; // true para activar que esten los números de slides para navegar por el slider
-  nextBtn      : '.next-btn';  // cualquier elemento de html en su notación de CSS
-  pauseBtn     : '.pause-btn'; // cualquier elemento de html en su notación de CSS
-  playBtn      : '.play-btn'; // cualquier elemento de html en su notación de CSS
-  prevBtn      : '.prev-btn'; // cualquier elemento de html en su notación de CSS
-  responsive   : false; // true para activar que sea responsive
-  speed        : 0.5; // determina la velocidad de la animación, va en segundos
-  timer        : false; // cualquier valor en segundos para activarlo
-  touch        : false; // true para activar que funcione con eventos touch (requiere dependencia externa)
+  direction    : 'horizontal'; // dirección del slider, puede ser horizontal o vertical
+  element      : '.slider li'; // elementos que funcionan como slides
+  keys         : false; // permite el desplazamiento vía teclas (flechas), true para activarlo
+  navContainer : '.slider nav';  // contenedor de la navegación del slider
+  navigation   : false; // crea una lista de números para navegar por el slider, true para activar
+  nextBtn      : '.next-btn';  // elemento que sirve como botón para pasar al siguiente slide
+  pauseBtn     : '.pause-btn'; // elemento que sirve como botón para pausar el autoslide
+  playBtn      : '.play-btn'; // elemento que sirve como botón para activar/reanudar el autoslide
+  prevBtn      : '.prev-btn'; // elemento que sirve como botón para volver al slide anterior
+  responsive   : false; // habilita que el slider se adapte al dispositivo, true para activarlo
+  speed        : 0.5; // determina la velocidad de la animación de transición, va en segundos
+  timer        : false; // tiempo para que cambie el slide cuando esta activo el autoslide, cualquier valor en segundos lo activa
+  touch        : false; // permite que funcione con eventos touch (requiere dependencia externa), true para activar
 });</pre>
       </code>
 
       <h4>Métodos</h4>
-      La clase proSlider posee varios métodos públicos que pudes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
+      La clase proSlider posee varios métodos públicos que puedes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
 
       <h5>.setSize()</h5>
       <p>
         Permite calcular el alto/ancho total del slider dependiendo de si es horizontal o vertical. Se ejecuta al usar .initialize() y cada vez que se redimensione el navegador si esta el responsive activado.
       </p>
 
-      <h5>.goToSlide()</h5>
+      <h5>.goToSlide(slide)</h5>
       <p>
         Recibe el slide objetivo al que se quiere ir y cambia a ese slide.
       </p>
@@ -157,7 +155,7 @@ proSlider({
 
       <h5>.setAutoSlide() y .clearAutoSlide()</h5>
       <p>
-        Permiten activar que el slider funcione solo cada X tiempo o detener este funcionamiento. El primero recibe un parámetro de tipo Int en milisegundos para determinar cada cuanto pase al siguiente slide.
+        Permiten activar que el slider cambie solo cada X tiempo o detener este funcionamiento. El primero recibe un parámetro de tipo Int en milisegundos para determinar cada cuanto pase al siguiente slide.
       </p>
 
       <h5>.setControllers()</h5>

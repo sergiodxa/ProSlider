@@ -3,7 +3,7 @@
 ## Dependencias
 Para poder empezar a utilizarlo se necesita cargar [jQuery](http://jquery.com) en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
 
-Al final te tienen que quedar estas líneas para cargar los archivos.
+Al final te tienen que quedar los siguientes archivos.
 
 ```html
 <script src="ruta/jquery.min.js"></script>
@@ -23,7 +23,7 @@ miSlider.initialize();
 Con esto ya tenemos nuestro slider funcionando usando los valores por defecto.
 
 ## Personalizar slider
-Para poder personalizar el slider (o tener más de uno por página) es necesario cambiar los valores por defecto del slider, para esto hay que empezar a pasarle parámetro al momento de definirlo. Ejemplo:
+Para poder personalizar el slider (o tener más de uno por página) es necesario cambiar los valores por defecto del slider, para esto hay que empezar a pasarle parámetros al momento de definirlo. Ejemplo:
 ```javascript
 var miSlider = new proSlider({
   direction : 'vertical',
@@ -33,28 +33,27 @@ var miSlider = new proSlider({
 Con esto ya tendríamos un slider que solo funciona con los elementos li dentro de .slides dentro de #miSlider y que funciona en vertical, hay muchos posibles parámetros con sus diferentes usos.
 
 ## Parámetros
-Esta es una lista de parámetros posibles a usar, sus valores por defecto y una descripción.
+Esta es una lista de los posibles parámetros a usar, sus valores por defecto y una descripción.
 ```javascript
 proSlider({
-  controller   : '.js-controller'; // cualquier elemento de html en su notación de CSS
-  direction    : 'horizontal|vertical'; // el slides solo funciona en horizontal y vertical;
-  element      : '.slider li'; // cualquier elemento de html en su notación de CSS
-  keys         : false; // true para activar que se puede mover mediante teclas
-  navContainer : '.slider nav';  // cualquier elemento de html en su notación de CSS
-  navigation   : false; // true para activar que esten los números de slides para navegar por el slider
-  nextBtn      : '.next-btn';  // cualquier elemento de html en su notación de CSS
-  pauseBtn     : '.pause-btn'; // cualquier elemento de html en su notación de CSS
-  playBtn      : '.play-btn'; // cualquier elemento de html en su notación de CSS
-  prevBtn      : '.prev-btn'; // cualquier elemento de html en su notación de CSS
-  responsive   : false; // true para activar que sea responsive
-  speed        : 0.5; // determina la velocidad de la animación, va en segundos
-  timer        : false; // cualquier valor en segundos para activarlo
-  touch        : false; // true para activar que funcione con eventos touch (requiere dependencia externa)
+  direction    : 'horizontal'; // dirección del slider, puede ser horizontal o vertical
+  element      : '.slider li'; // elementos que funcionan como slides
+  keys         : false; // permite el desplazamiento vía teclas (flechas), true para activarlo
+  navContainer : '.slider nav';  // contenedor de la navegación del slider
+  navigation   : false; // crea una lista de números para navegar por el slider, true para activar
+  nextBtn      : '.next-btn';  // elemento que sirve como botón para pasar al siguiente slide
+  pauseBtn     : '.pause-btn'; // elemento que sirve como botón para pausar el autoslide
+  playBtn      : '.play-btn'; // elemento que sirve como botón para activar/reanudar el autoslide
+  prevBtn      : '.prev-btn'; // elemento que sirve como botón para volver al slide anterior
+  responsive   : false; // habilita que el slider se adapte al dispositivo, true para activarlo
+  speed        : 0.5; // determina la velocidad de la animación de transición, va en segundos
+  timer        : false; // tiempo para que cambie el slide cuando esta activo el autoslide, cualquier valor en segundos lo activa
+  touch        : false; // permite que funcione con eventos touch (requiere dependencia externa), true para activar
 });
 ```
 
 ## Métodos
-La clase proSlider posee varios métodos públicos que pudes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
+La clase proSlider posee varios métodos públicos que puedes acceder en cualquier momento y te permiten programar interacción con el slider. Para esto tienes que llamarlos de una forma similar a .initialize(). A continuación una lista de métodos con su función:
 
 ### .setSize()
 Permite calcular el alto/ancho total del slider dependiendo de si es horizontal o vertical. Se ejecuta al usar .initialize() y cada vez que se redimensione el navegador si esta el responsive activado.
