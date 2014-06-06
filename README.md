@@ -1,4 +1,4 @@
-# ProSlider v1.2.0
+# ProSlider v1.0.0
 
 ## Dependencias
 Para poder empezar a utilizarlo se necesita cargar [jQuery](http://jquery.com) en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
@@ -36,19 +36,21 @@ Con esto ya tendríamos un slider que solo funciona con los elementos li dentro 
 Esta es una lista de los posibles parámetros a usar, sus valores por defecto y una descripción.
 ```javascript
 proSlider({
-  direction    : 'horizontal'; // dirección del slider, puede ser horizontal o vertical
-  element      : '.slider li'; // elementos que funcionan como slides
-  keys         : false; // permite el desplazamiento vía teclas (flechas), true para activarlo
-  navContainer : '.slider nav';  // contenedor de la navegación del slider
-  navigation   : false; // crea una lista de números para navegar por el slider, true para activar
-  nextBtn      : '.next-btn';  // elemento que sirve como botón para pasar al siguiente slide
-  pauseBtn     : '.pause-btn'; // elemento que sirve como botón para pausar el autoslide
-  playBtn      : '.play-btn'; // elemento que sirve como botón para activar/reanudar el autoslide
-  prevBtn      : '.prev-btn'; // elemento que sirve como botón para volver al slide anterior
-  responsive   : false; // habilita que el slider se adapte al dispositivo, true para activarlo
-  speed        : 0.5; // determina la velocidad de la animación de transición, va en segundos
-  timer        : false; // tiempo para que cambie el slide cuando esta activo el autoslide, cualquier valor en segundos lo activa
-  touch        : false; // permite que funcione con eventos touch (requiere dependencia externa), true para activar
+  direction     : 'horizontal', // dirección del slider, puede ser horizontal o vertical
+  element       : '.slider li', // elementos que funcionan como slides
+  keys          : false; // permite el desplazamiento vía teclas (flechas), true para activarlo
+  minis         : false, // activas las miniaturas para sliders de imágenes, true para activarlo
+  minisContainer: '.minis', // contenedor de las miniaturas
+  navContainer  : '.slider nav',  // contenedor de la navegación del slider
+  navigation    : false, // crea una lista de números para navegar por el slider, true para activar
+  nextBtn       : '.next-btn',  // elemento que sirve como botón para pasar al siguiente slide
+  pauseBtn      : '.pause-btn', // elemento que sirve como botón para pausar el autoslide
+  playBtn       : '.play-btn', // elemento que sirve como botón para activar/reanudar el autoslide
+  prevBtn       : '.prev-btn', // elemento que sirve como botón para volver al slide anterior
+  responsive    : false, // habilita que el slider se adapte al dispositivo, true para activarlo
+  speed         : 0.5, // determina la velocidad de la animación de transición, va en segundos
+  timer         : false, // tiempo para que cambie el slide cuando esta activo el autoslide, cualquier valor en segundos lo activa
+  touch         : false // permite que funcione con eventos touch (requiere dependencia externa), true para activar
 });
 ```
 
@@ -84,6 +86,12 @@ Asigna los métodos .nextSlide() y .prevSlide() a las flechas derecha/abajo e iz
 
 ### .disabledKeys()
 Desliga los métodos .nextSlide() y .prevSlide() de las flechas asignadas con .setKeys(), este métodos afecta a todos los sliders de la página.
+
+### .setMiniatures()
+Crea miniaturas para cada slide en los sliders de imágenes y permite navegar por el slider usándolas.
+
+### .clearMiniatures()
+Borra las miniaturas creadas con .setMiniatures().
 
 ### .initialize()
 Asigna o ejecuta los anteriores métodos dependiendo de los parámetros pasados.
