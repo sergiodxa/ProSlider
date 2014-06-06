@@ -6,8 +6,8 @@ var proSlider = function(propieties) {
   this.direction      = propieties.direction || 'horizontal';
   this.element        = propieties.element || '.slider li';
   this.keys           = propieties.keys || false;
-  //this.minis          = propieties.minis || false;
-  //this.minisContainer = propieties.minisContainer || '.minis';
+  this.minis          = propieties.minis || false;
+  this.minisContainer = propieties.minisContainer || '.minis';
   this.navContainer   = propieties.navContainer || '.slider-nav';
   this.navigation     = propieties.navigation || false;
   this.nextBtn        = propieties.nextBtn || '.next-btn';
@@ -20,13 +20,14 @@ var proSlider = function(propieties) {
   this.touch          = propieties.touch || false;
 
   // Objetos de jQuery
-  var $container    = $(this.element).parent();
-  var $element      = $(this.element);
-  var $navContainer = $(this.navContainer);
-  var $nextBtn      = $(this.nextBtn);
-  var $pauseBtn     = $(this.pauseBtn);
-  var $playBtn      = $(this.playBtn);
-  var $prevBtn      = $(this.prevBtn);
+  var $container      = $(this.element).parent();
+  var $element        = $(this.element);
+  var $minisContainer = $(this.minisContainer);
+  var $navContainer   = $(this.navContainer);
+  var $nextBtn        = $(this.nextBtn);
+  var $pauseBtn       = $(this.pauseBtn);
+  var $playBtn        = $(this.playBtn);
+  var $prevBtn        = $(this.prevBtn);
 
   // Definición de variables
   var axis;
@@ -35,7 +36,6 @@ var proSlider = function(propieties) {
   var targetSlide;
   var timer = this.timer || 1500;
   var totalSize;
-
 
   /* ============================================================= */
 
@@ -75,7 +75,7 @@ var proSlider = function(propieties) {
     if (axis == 'X') {
 
       totalSize = 0;
-      
+
       // calculamos el tamaño total en ancho del contenedor
       for (var i = 0; i < $element.length; ++i) {
         totalSize += parseInt($container.parent().css('width'));
@@ -100,7 +100,7 @@ var proSlider = function(propieties) {
 
       // definimos el tamaño total como 0 para poder empezar a sumarle valores
       totalSize = 0;
-      
+
       // calculamos el tamaño total en alto del contenedor sumando la altura de cada elemento
       for (var i = 0; i < $element.length; ++i) {
         var height = parseInt($($element[i]).css('height'));
@@ -158,7 +158,7 @@ var proSlider = function(propieties) {
     // al slide actual le agregamos la clase .js-active-slide
     $($element[slide]).addClass('.js-active-slide');
 
-    // obtenemos la lsita de links del nav
+    // obtenemos la lista de links del nav
     var $navListLink = $navContainer.find('.slider-nav-list-link');
 
     // les quitamos la clase active
@@ -166,6 +166,15 @@ var proSlider = function(propieties) {
 
     // y al que corresponde con el slide actual le agregamos la clase active
     $($navListLink[slide]).addClass('active');
+
+    // obtenemos la lista de links del nav
+    var $minisList = $minisContainer.find('.slider-miniature');
+
+    // les quitamos la clase active
+    $minisList.removeClass('active');
+
+    // y al que corresponde con el slide actual le agregamos la clase active
+    $($minisList[slide]).addClass('active');
   }
   var goToSlide = this.goToSlide; // asignamos el método goToSlide para usar de forma interna.
 
@@ -422,8 +431,44 @@ var proSlider = function(propieties) {
 
 
   // definimos el método para activar las miniaturas
-  this.setMiniatures = function() {}
-  var setMiniatures = this.setMiniatures; // asignamos el método setMiniatures para usar de forma interna. 
+  this.setMiniatures = function() {
+
+    // creamos un string con todas las miniaturas
+    var minisContent = ''
+    for (var i = 0; i < $element.length; ++i) {
+      var imageLink = $($element[i]).find('img').attr('src');
+      minisContent += '<a data-slide="' + i + '" class="slider-miniature"><img src="' + imageLink + '"/></a>';
+    }
+    console.log(minisContent);
+
+    // agregamos las miniaturas al contenedor de miniaturas
+    $minisContainer.html(minisContent);
+
+    // obtenemos todos los slider-nav-list-link dentro de $navContainer
+    var $minisLinks = $minisContainer.find('.slider-miniature');
+
+    // al primer navLink le agregamos la clase active
+    $($minisLinks[0]).addClass('active');
+
+    // les asignamos a los links del nav que al hacer click se objeta el data-slide y se vaya a ese slide
+    $($minisLinks).on('click', function() {
+      // obtenemos el targetSlide
+      targetSlide = $(this).data('slide');
+
+      // llamamos al método goToSlide para ir al slide objetivo
+      goToSlide(targetSlide);
+    });
+  }
+  var setMiniatures = this.setMiniatures; // asignamos el método setMiniatures para usar de forma interna.
+
+
+  /* ============================================================= */
+
+
+  this.clearMiniatures = function() {
+    $minisContainer.html('');
+  }
+  var clearMiniatures = this.clearMiniatures; // asignamos el método clearNavigation para usar de forma interna.
 
 
   /* ============================================================= */
@@ -473,6 +518,11 @@ var proSlider = function(propieties) {
     // iniciamos el desplazamiento por teclas si esta activado
     if (this.keys) {
       setKeys();
+    }
+
+    // creamos las miniaturas si esta activado
+    if (this.minis) {
+      setMiniatures();
     }
   }
 

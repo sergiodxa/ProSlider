@@ -419,3 +419,25 @@ code pre {
 img {
   max-width: 100%;
 }
+
+.minis {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+.minis a {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-size: -0px;
+  height: 180px;
+  opacity: .5;
+  width: 33.33%;
+}
+.minis a.active {
+  opacity: 1;
+}
