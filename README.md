@@ -1,4 +1,5 @@
 # ProSlider v1.0.0
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 ## Dependencias
 Para poder empezar a utilizarlo se necesita cargar [jQuery](http://jquery.com) en su última versión (v1.11.0 a la fecha) y si se quiere utilizar eventos touch se necesita la librería [jQuery touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/demos).
